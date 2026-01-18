@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Odisea del Estudiante</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Bangers&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon-blue: #00f2ff; --neon-pink: #ff007f; --paper: #fdfcf0; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Quicksand', sans-serif; }
+
+        /* --- FASE 1: CIUDAD DIVERTIDA --- */
+        #fase1 { position: fixed; inset: 0; z-index: 1000; transition: 1.5s; display: flex; justify-content: center; align-items: center; }
+        .city-fun { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1514525253361-b83f859b73c0?q=80&w=2000') center/cover; filter: saturate(1.8) brightness(0.7); animation: party 8s infinite alternate; }
+        @keyframes party { from { filter: hue-rotate(0deg); transform: scale(1); } to { filter: hue-rotate(90deg); transform: scale(1.05); } }
+        .btn-inicio { position: relative; z-index: 10; padding: 25px 50px; font-family: 'Bangers', cursive; font-size: 3rem; color: #fff; background: var(--neon-pink); border: 5px solid #fff; cursor: pointer; transform: rotate(-3deg); box-shadow: 12px 12px 0px #000; transition: 0.2s; }
+        .btn-inicio:hover { transform: scale(1.1) rotate(0deg); box-shadow: 5px 5px 0px #000; }
+
+        /* --- FASE 2: NY TRISTE --- */
+        #fase2 { position: fixed; inset: 0; opacity: 0; visibility: hidden; z-index: 900; transition: 2s; background: #050505; }
+        .city-sad { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1534430480872-3498386e7a56?q=80&w=2000') center/cover; filter: grayscale(1) brightness(0.25); }
+        .rain { position: absolute; inset: 0; background: url('https://raw.githubusercontent.com/P337ER/Falling-Rain-Effect/master/rain.png'); animation: rain .2s linear infinite; opacity: 0.15; }
+        #texto-narrativo { position: relative; z-index: 10; height: 100%; display: flex; justify-content: center; align-items: center; color: #fff; font-family: 'Cinzel', serif; font-size: 2.2rem; text-align: center; padding: 0 12%; text-shadow: 0 0 20px rgba(0,0,0,1); }
+
+        /* --- FASE 3: DESGRACIA (HOJAS AL CRISTAL) --- */
+        #fase3 { position: fixed; inset: 0; opacity: 0; visibility: hidden; z-index: 1100; background: #0a0a0a; transition: 1s; }
+        .hoja { 
+            position: absolute; background: var(--paper); color: #222; padding: 20px; width: 180px; height: 240px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 0.9rem; pointer-events: none;
+            display: flex; flex-direction: column; justify-content: space-between; border-left: 5px solid #d32f2f;
+        }
+        .hoja-pegada { animation: hitGlass 0.6s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        @keyframes hitGlass { 
+            0% { transform: scale(5) translate(0, -1000px); opacity: 0; filter: blur(15px); } 
+            100% { transform: scale(1) translate(var(--tx), var(--ty)) rotate(var(--tr)); opacity: 1; filter: blur(0px); } 
+        }
+        #lamina { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 85%; max-width: 650px; background: #fffde7; border: 12px solid #3e2723; padding: 50px;
+            text-align: center; transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1300; 
+        }
+        #lamina h1 { font-family: 'Bangers', cursive; color: #b71c1c; font-size: 3.5rem; margin: 0; line-height: 1; }
+
+        /* --- FASE 4: GALAXIA --- */
+        #fase4 { position: fixed; inset: 0; opacity: 0; visibility: hidden; z-index: 1400; transition: 1.5s; background: #000; }
+        #canvas-galaxia { position: absolute; inset: 0; }
+        .monda { position: absolute; width: 100%; text-align: center; top: 50%; transform: translateY(-50%); font-family: 'Bangers'; font-size: 6rem; color: #fff; text-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-pink); z-index: 10; }
+
+        /* --- FASE 5: CAMPO LIBERTAD --- */
+        #fase5 { position: fixed; inset: 0; opacity: 0; visibility: hidden; z-index: 1500; transition: 2.5s; }
+        .campo { position: absolute; inset: 0; background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .pasto { width: 100%; height: 30%; background: #2ecc71; position: relative; }
+        .chico { font-size: 12rem; position: absolute; bottom: 20%; left: 50%; transform: translateX(-50%); animation: jumpLibre 0.8s infinite alternate ease-in-out; }
+        @keyframes jumpLibre { from { bottom: 20%; } to { bottom: 45%; transform: translateX(-50%) rotate(10deg); } }
+        .msg-libre { font-family: 'Bangers'; font-size: 5rem; color: white; margin-bottom: 200px; text-shadow: 5px 5px 0px #27ae60; z-index: 20; }
+    </style>
+</head>
+<body>
+
+    <audio id="musicaFeliz" loop><source src="https://www.bensound.com/bensound-music/bensound-energy.mp3" type="audio/mpeg"></audio>
+    <audio id="musicaTriste" loop><source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg"></audio>
+
+    <div id="fase1">
+        <div class="city-fun"></div>
+        <button class="btn-inicio" onclick="comenzar()">TOCA AQUÍ!</button>
+    </div>
+
+    <div id="fase2">
+        <div class="city-sad"></div>
+        <div class="rain"></div>
+        <div id="texto-narrativo"></div>
+        <button id="btn-next" onclick="irAExamenes()" style="position:absolute; bottom:12%; left:50%; transform:translateX(-50%); display:none; padding:15px 40px; font-family:'Bangers'; font-size:1.5rem; color:#fff; background:none; border:2px solid #fff; cursor:pointer; z-index:100;">DESCUBRE MI DESGRACIA</button>
+    </div>
+
+    <div id="fase3">
+        <div id="contenedor-hojas"></div>
+        <div id="lamina"><h1>LO QUE ME PASA X IRRESPONSABLE</h1></div>
+    </div>
+
+    <div id="fase4">
+        <canvas id="canvas-galaxia"></canvas>
+        <div class="monda">PERO ME VALE MONDA</div>
+    </div>
+
+    <div id="fase5">
+        <div class="campo">
+            <h1 class="msg-libre">¡SOY LIBRE!</h1>
+            <div class="chico">🏃‍♂️</div>
+            <div class="pasto"></div>
+        </div>
+    </div>
+
+    <script>
+        const mFeliz = document.getElementById('musicaFeliz');
+        const mTriste = document.getElementById('musicaTriste');
+
+        function comenzar() {
+            mFeliz.play();
+            document.getElementById('fase1').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('fase1').style.display = 'none';
+                const f2 = document.getElementById('fase2');
+                f2.style.visibility = 'visible'; f2.style.opacity = '1';
+                mFeliz.pause(); mTriste.currentTime = 0; mTriste.play();
+                escribirFase2();
+            }, 1000);
+        }
+
+        function escribirFase2() {
+            const txt = "aca me ves asiendo esto y adivina lo que tengo que estudiar .";
+            let i = 0; const el = document.getElementById('texto-narrativo');
+            const itv = setInterval(() => {
+                el.innerHTML += txt.charAt(i); i++;
+                if(i>=txt.length){ clearInterval(itv); document.getElementById('btn-next').style.display='block'; }
+            }, 70);
+        }
+
+        function irAExamenes() {
+            document.getElementById('fase2').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('fase3').style.visibility = 'visible';
+                document.getElementById('fase3').style.opacity = '1';
+                lanzarHojas();
+            }, 1000);
+        }
+
+        function lanzarHojas() {
+            const data = [
+                {m: "MATEMÁTICAS", e: "∫(x² + 2x)dx = ?"},
+                {m: "FÍSICA", e: "F = m · a (DESPEJE)"},
+                {m: "QUÍMICA", e: "ESTEQUIOMETRÍA"},
+                {m: "BIOLOGÍA", e: "CICLO DE KREBS"},
+                {m: "EXAMEN", e: "NOTA: 0.5/10"},
+                {m: "EXPOSICIÓN", e: "TEMA: NO VINO"}
+            ];
+            const container = document.getElementById('contenedor-hojas');
+            
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    const h = document.createElement('div');
+                    h.className = 'hoja hoja-pegada';
+                    const d = data[i % data.length];
+                    h.innerHTML = `<center><b>${d.m}</b></center><hr><p>${d.e}</p><br><br><p align='right'>REPROBADO</p>`;
+                    h.style.setProperty('--tx', (Math.random()*70 - 35) + 'vw');
+                    h.style.setProperty('--ty', (Math.random()*70 - 35) + 'vh');
+                    h.style.setProperty('--tr', (Math.random()*40 - 20) + 'deg');
+                    h.style.left = '45%'; h.style.top = '40%';
+                    container.appendChild(h);
+                }, i * 250);
+            }
+            setTimeout(() => { document.getElementById('lamina').style.transform = 'translate(-50%, -50%) scale(1)'; }, 5500);
+            setTimeout(irAGalaxia, 10000);
+        }
+
+        function irAGalaxia() {
+            document.getElementById('fase3').style.opacity = '0';
+            const f4 = document.getElementById('fase4');
+            f4.style.visibility = 'visible'; f4.style.opacity = '1';
+            mTriste.pause(); mFeliz.currentTime = 5; mFeliz.play(); // Reinicia música feliz con energía
+            iniciarGalaxia();
+            setTimeout(irAFinal, 7000);
+        }
+
+        function iniciarGalaxia() {
+            const c = document.getElementById('canvas-galaxia');
+            const ctx = c.getContext('2d');
+            c.width = window.innerWidth; c.height = window.innerHeight;
+            let p = [];
+            for(let i=0; i<800; i++) p.push({
+                x: Math.random()*c.width, y: Math.random()*c.height, 
+                s: Math.random()*4, color: Math.random() > 0.5 ? '#00f2ff' : '#ff007f'
+            });
+            function draw() {
+                ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(0,0,c.width,c.height);
+                p.forEach(s => { 
+                    ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, 7); ctx.fill(); 
+                    s.x += (s.x - c.width/2) * 0.02; s.y += (s.y - c.height/2) * 0.02;
+                    if(s.x<0 || s.x>c.width || s.y<0 || s.y>c.height) { s.x = Math.random()*c.width; s.y = Math.random()*c.height; }
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        function irAFinal() {
+            document.getElementById('fase4').style.opacity = '0';
+            const f5 = document.getElementById('fase5');
+            f5.style.visibility = 'visible'; f5.style.opacity = '1';
+        }
+    </script>
+</body>
+</html>
